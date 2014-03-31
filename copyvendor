@@ -1,0 +1,2 @@
+cp ~/Projects/legend-bar/dist/Leg* ./dist/vendor/legend-bar/
+cp ~/Projects/barchart-html/dist/Bar* ./dist/vendor/barchart-html/
