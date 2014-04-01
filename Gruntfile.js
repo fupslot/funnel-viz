@@ -27,6 +27,10 @@ module.exports = function(grunt) {
         src: ['src/js/plugin/**/*.*'],
         dest: 'dist/FunnelViz.js'
       },
+      angular: {
+        src: ['src/js/angular/**/*.*'],
+        dest: 'dist/CoolaData.UI.FunnelViz.js'
+      },
       app: {
         src: ['src/js/app/**/*.*'],
         dest: 'dist/app.js'

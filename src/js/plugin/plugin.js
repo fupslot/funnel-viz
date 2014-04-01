@@ -5,15 +5,21 @@
       , defaults;
 
     defaults = {
-        compare:   true,
-        breakdown: false,
-        showBreakdownConversion: false,
-        allowHighlight: true,
-        events:    [],
-        labels:    [],
         sections:  [],
-        barColorName: 'blue'
     };
+
+    function _pluck(collection, property) {
+      var index = -1,
+          length = collection ? collection.length : 0;
+
+      if (typeof length == 'number') {
+        var result = Array(length);
+        while (++index < length) {
+          result[index] = collection[index][property];
+        }
+      }
+      return result;
+    }
 
     function _getLegendBarSettings (options) {
         var result;
@@ -28,10 +34,17 @@
         return result;
     }
 
-    function legendBar_onChanged (e, breakdown) {
+    function legendBar_onChanged (e, legend) {
+        var isBreakdown;
         this.$chartEl.BarChartHTML('destroy');
-        this.options.breakdown = Array.prototype.slice.call(breakdown);
+
+        isBreakdown = legend.length !== 0;
+
+        this.options.breakdown    = isBreakdown && _pluck(legend, 'idx');
+        this.options.colorIndexes = isBreakdown && _pluck(legend, 'ci');
+
         this.$chartEl.BarChartHTML(this.options);
+        this.$el.trigger('breakdown', legend);
     }
 
     function Plugin (el, options) {
@@ -51,13 +64,12 @@
         init: function () {
             var el, legendBarSettings;
 
-            
             el = this.$el;
             el.hide();
             el.addClass('funnel-viz');
             
-            this.$barEl = $('<div class="funnel-viz-bar">');
-            this.$chartEl  = $('<ul class="funnel-viz-chart">');
+            this.$barEl   = $('<div class="funnel-viz-bar">');
+            this.$chartEl = $('<ul class="funnel-viz-chart">');
 
             el.append(this.$barEl, this.$chartEl);
             
@@ -80,11 +92,9 @@
         },
 
         destroy: function () {
-            var obj;
-            
-            obj = this.data('plugin_' + pluginName);
-
-            this.$el.removeClass('funnel-viz');
+            this.$el
+                .off('breakdown')
+                .removeClass('funnel-viz');
 
             if (!this.$barEl.hasClass('no-breakdown')) {
                 this.$legendEl.LegendBar('destroy');
@@ -92,6 +102,7 @@
             this.$chartEl.BarChartHTML('destroy');
             
             this.$legendEl = this.$chartEl = void 0;
+            this.$el.removeData('plugin_'+pluginName);
             this.$el.children().remove();
         }
     };
