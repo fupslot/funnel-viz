@@ -8,6 +8,32 @@
         sections:  [],
     };
 
+    function getParentSize (el) {
+        var parent;
+        parent = el.parent();
+        return {
+            width: parent.innerWidth(),
+            height: parent.innerHeight()
+        };
+    }
+
+    function getMargin (container, widget) {
+        var deltaW, deltaH;
+
+        deltaW = container.width  - widget.width;
+        deltaH = container.height - widget.height;
+
+        deltaW = deltaW > 0 ? deltaW : 0;
+        deltaH = deltaH > 0 ? deltaH : 0;
+
+        return {
+            'top'   : deltaH / 2,
+            'bottom': deltaH / 2,
+            'left'  : deltaW / 2,
+            'right' : deltaW / 2
+        };
+    }
+
     function _pluck(collection, property) {
       var index = -1,
           length = collection ? collection.length : 0;
@@ -89,12 +115,37 @@
             this.$chartEl.BarChartHTML(this.options);
 
             el.css('display', 'inline-block');
+
+            this.resize();
+        },
+
+        resize: function (containerSize) {
+            var widgetSize
+              , margin;
+            
+            this.$el.css('margin', '');
+
+            if ($.isEmptyObject(containerSize)) containerSize = getParentSize(this.$el);
+            widgetSize = {
+                width: this.$el.outerWidth(),
+                height: this.$el.outerHeight()
+            };
+
+            margin = getMargin(containerSize, widgetSize);
+
+            this.$el.css({
+                'margin-left'  : margin.left   + 'px',
+                'margin-right' : margin.right  + 'px',
+                'margin-top'   : margin.top    + 'px',
+                'margin-bottom': margin.bottom + 'px',
+            });
         },
 
         destroy: function () {
             this.$el
                 .off('breakdown')
-                .removeClass('funnel-viz');
+                .removeClass('funnel-viz')
+                .css('margin', '');
 
             if (!this.$barEl.hasClass('no-breakdown')) {
                 this.$legendEl.LegendBar('destroy');

@@ -28,17 +28,26 @@ settings = {
 };
 
 $(function () {
-    $('#funnel-viz').FunnelViz(settings);
-    $('#funnel-viz').on('breakdown', function (e, legend) {
-        console.log(legend);
-    });
+    // $('#funnel-viz').FunnelViz(settings);
+    // $('#funnel-viz').on('breakdown', function (e, legend) {
+    //     console.log(legend);
+    // });
 
-    $('#destroy').on('click', function () {
-        $('#funnel-viz').FunnelViz('destroy');
-    });
-    $('#init').on('click', function () {
-        $('#funnel-viz').FunnelViz(settings);
-    });
+    // $(window).on('resize', function () {
+    //     $('#funnel-viz').FunnelViz('resize');
+    // });
+
+    // $('#destroy').on('click', function () {
+        // $('#funnel-viz').FunnelViz('destroy');
+        // $(window).off('refresh');
+    // });
+    // $('#init').on('click', function () {
+        // $('#funnel-viz').FunnelViz(settings);
+        // $(window).on('resize', function () {
+        //     console.log('ss');
+        //     $('#funnel-viz').FunnelViz('resize');
+        // });
+    // });
 });
 
 angular.module('CoolaData.UI.Test', ['CoolaData.UI'])
@@ -102,6 +111,8 @@ angular.module('CoolaData.UI.Test', ['CoolaData.UI'])
             settings: {}
         }
     ];
+
+    $scope.size = {width: 0, height: 0};
 
     $scope.options = {
         onBreakdown: function (legend) {

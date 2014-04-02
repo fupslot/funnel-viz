@@ -1,9 +1,5 @@
-
 angular.module('CoolaData.UI',[])
-.controller('mainCtrl', function ($scope) {
-    $scope.message = 'hello';
-})
-.directive('funnelViz', function () {
+.directive('funnelChartViz', function () {
     var defaults = {
         onBreakdown: angular.noop
     };
@@ -12,21 +8,36 @@ angular.module('CoolaData.UI',[])
         require: 'ngModel',
         link: function  (scope, el, attrs, ctrl) {
             var data
-              , options;
+              , options
+              , initialized;
 
+            initialized = false;
             options = angular.extend({}, defaults, scope.$eval(attrs.funnelViz));
+
+            function getParentSizeAttrValue () {
+                var size = scope.$eval(attrs.parentSize);
+                size.width  = parseInt(size.width)  || 0;
+                size.height = parseInt(size.height) || 0;
+                return size;
+            }
             
+            attrs.$observe('parentSize', function (size) {
+                if (initialized && !$.isEmptyObject(attrs)) el.FunnelViz('resize', getParentSizeAttrValue());
+            });
+
             ctrl.$render = function () {
                 if (data) {
                     el.FunnelViz('destroy');
                     data = void 0;
+                    initialized = false;
                 }
                 
                 if (!$.isEmptyObject(ctrl.$viewValue)) {
                     data = ctrl.$viewValue;
                     el.FunnelViz(data);
+                    el.FunnelViz('resize', getParentSizeAttrValue());
                     el.on('breakdown', options.onBreakdown);
-                    console.log('Created');
+                    initialized = true;
                 }
             }
         }
