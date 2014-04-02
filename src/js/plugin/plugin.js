@@ -130,6 +130,9 @@
                 width: this.$el.outerWidth(),
                 height: this.$el.outerHeight()
             };
+            
+            // DOM isn't constructed yet.
+            if (widgetSize.width == 0 && widgetSize.height == 0) return;
 
             margin = getMargin(containerSize, widgetSize);
 

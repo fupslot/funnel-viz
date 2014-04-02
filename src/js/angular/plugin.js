@@ -15,7 +15,8 @@ angular.module('CoolaData.UI',[])
             options = angular.extend({}, defaults, scope.$eval(attrs.funnelViz));
 
             function getParentSizeAttrValue () {
-                var size = scope.$eval(attrs.parentSize);
+                var size;
+                size = scope.$eval(attrs.parentSize) || {width:0, height:0};
                 size.width  = parseInt(size.width)  || 0;
                 size.height = parseInt(size.height) || 0;
                 return size;
