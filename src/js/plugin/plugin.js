@@ -8,32 +8,6 @@
         sections:  [],
     };
 
-    function getParentSize (el) {
-        var parent;
-        parent = el.parent();
-        return {
-            width: parent.innerWidth(),
-            height: parent.innerHeight()
-        };
-    }
-
-    function getMargin (container, widget) {
-        var deltaW, deltaH;
-
-        deltaW = container.width  - widget.width;
-        deltaH = container.height - widget.height;
-
-        deltaW = deltaW > 0 ? deltaW : 0;
-        deltaH = deltaH > 0 ? deltaH : 0;
-
-        return {
-            'top'   : deltaH / 2,
-            'bottom': deltaH / 2,
-            'left'  : deltaW / 2,
-            'right' : deltaW / 2
-        };
-    }
-
     function _pluck(collection, property) {
       var index = -1,
           length = collection ? collection.length : 0;
@@ -47,7 +21,7 @@
       return result;
     }
 
-    function _getLegendBarSettings (options) {
+    function getLegendBarSettings (options) {
         var result;
         if ($.isArray(options.breakdown)) {
             result = {names:[],checked:[]};
@@ -100,7 +74,7 @@
             el.append(this.$barEl, this.$chartEl);
             
             // 
-            legendBarSettings = _getLegendBarSettings(this.options);
+            legendBarSettings = getLegendBarSettings(this.options);
             if (legendBarSettings !== void 0) {
                 this.$legendEl = $('<div>');
                 // Append a Legend to a Bar
@@ -114,34 +88,13 @@
 
             this.$chartEl.BarChartHTML(this.options);
 
-            el.css('display', 'inline-block');
-
             this.resize();
+            el.css('display', 'inline-block');
         },
 
         resize: function (containerSize) {
-            var widgetSize
-              , margin;
-            
-            this.$el.css('margin', '');
-
-            if ($.isEmptyObject(containerSize)) containerSize = getParentSize(this.$el);
-            widgetSize = {
-                width: this.$el.outerWidth(),
-                height: this.$el.outerHeight()
-            };
-            
-            // DOM isn't constructed yet.
-            if (widgetSize.width == 0 && widgetSize.height == 0) return;
-
-            margin = getMargin(containerSize, widgetSize);
-
-            this.$el.css({
-                'margin-left'  : margin.left   + 'px',
-                'margin-right' : margin.right  + 'px',
-                'margin-top'   : margin.top    + 'px',
-                'margin-bottom': margin.bottom + 'px',
-            });
+            console.log('containerSize', containerSize);
+            this.$chartEl.BarChartHTML('resize', containerSize);
         },
 
         destroy: function () {

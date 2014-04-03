@@ -22,7 +22,7 @@ angular.module('CoolaData.UI',[])
                 return size;
             }
             
-            attrs.$observe('parentSize', function (size) {
+            attrs.$observe('parentSize', function () {
                 if (initialized && !$.isEmptyObject(attrs)) el.FunnelViz('resize', getParentSizeAttrValue());
             });
 
