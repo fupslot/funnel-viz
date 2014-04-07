@@ -3,10 +3,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-recess');
   
   //config
   grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
     connect: {
       options: {
         host: 'localhost',
@@ -42,6 +44,26 @@ module.exports = function(grunt) {
         options: { compile: true },
         src: ['src/less/style.less'],
         dest: 'dist/FunnelViz.css'
+      },
+      min: {
+        options: {
+          compile:  true,
+          compress: true
+        },
+        src: ['./dist/vendor/legend-bar/LegendBar.css', './dist/vendor/barchart-html/BarChartHTML.css', './dist/FunnelViz.css'],
+        dest: 'dist/funnel-viz.min.css'
+      }
+    },
+
+    uglify: {
+      funnel: {
+        options: {
+          banner: '/*<%= pkg.name %> - v<%= pkg.version %> - ' +
+                  '<%= grunt.template.today("yyyy-mm-dd") %> */',
+          drop_console: true
+        },
+        src: ['./dist/vendor/smart-array-js/SmartArray.js', './dist/vendor/legend-bar/LegendBar.js', './dist/vendor/barchart-html/BarChartHTML.js', './dist/FunnelViz.js'],
+        dest: './dist/funnel-viz.min.js'
       }
     },
 
@@ -57,7 +79,7 @@ module.exports = function(grunt) {
           }
         }
       }
-    }
+    },
   });
 
   grunt.registerTask('server', [

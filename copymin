@@ -1,0 +1,1 @@
+cp ./dist/funnel-viz.min* ~/Projects/panoramix/frontend/appengine_demo/website/static/dashboard/libs/funnel-viz/
