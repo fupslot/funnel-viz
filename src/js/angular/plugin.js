@@ -1,8 +1,10 @@
 angular.module('CoolaData.UI',[])
 .directive('funnelChartViz', function () {
     var defaults = {
-        onBreakdown: angular.noop
+        onBreakdown: angular.noop,
+        onHighlight: angular.noop
     };
+
     return {
         restrict: 'AC',
         require: 'ngModel',
@@ -12,7 +14,7 @@ angular.module('CoolaData.UI',[])
               , initialized;
 
             initialized = false;
-            options = angular.extend({}, defaults, scope.$eval(attrs.funnelViz));
+            options = angular.extend({}, defaults, scope.$eval(attrs.funnelChartViz));
 
             function getParentSizeAttrValue () {
                 var size;
@@ -38,6 +40,7 @@ angular.module('CoolaData.UI',[])
                     el.FunnelViz(data);
                     el.FunnelViz('resize', getParentSizeAttrValue());
                     el.on('breakdown', options.onBreakdown);
+                    el.on('highlight', options.onHighlight);
                     initialized = true;
                 }
             }
