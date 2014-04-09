@@ -39,8 +39,12 @@ angular.module('CoolaData.UI',[])
                     data = ctrl.$viewValue;
                     el.FunnelViz(data);
                     el.FunnelViz('resize', getParentSizeAttrValue());
-                    el.on('breakdown', options.onBreakdown);
-                    el.on('highlight', options.onHighlight);
+                    el.on('highlight', function (e, sectionName, eventName, part, isSection) {
+                        scope.$emit('funnelChartViz_onHighlight', sectionName, eventName, part, isSection);
+                    });
+                    el.on('breakdown', function (e, legend) {
+                        scope.$emit('funnelChartViz_onBreakdown', legend);
+                    });
                     initialized = true;
                 }
             }

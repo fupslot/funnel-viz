@@ -1,4 +1,5 @@
 cp ./dist/vendor/barchart-html/* ~/Projects/panoramix/frontend/appengine_demo/website/static/dashboard/libs/barchart-html/
 cp ./dist/vendor/legend-bar/* ~/Projects/panoramix/frontend/appengine_demo/website/static/dashboard/libs/legend-bar/
+cp ./dist/vendor/smart-array-js/* ~/Projects/panoramix/frontend/appengine_demo/website/static/dashboard/angular/
 cp ./dist/FunnelViz* ~/Projects/panoramix/frontend/appengine_demo/website/static/dashboard/libs/funnel-viz/
 cp ./dist/CoolaData.UI.FunnelViz.js ~/Projects/panoramix/frontend/appengine_demo/website/static/dashboard/controls/funnelChartViz/
