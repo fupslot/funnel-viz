@@ -37,8 +37,8 @@ $(function () {
         .on('breakdown', function (e, legend) {
             console.log(legend);
         })
-        .on('highlight', function (e,  sectionName, eventName, part, isSection) {
-            console.log(sectionName, eventName, part, isSection);
+        .on('highlight', function (e,  sectionName, eventName, part, isSection, isHighlighted) {
+            console.log(sectionName, eventName, part, isSection, isHighlighted);
         });
 
     $('#destroy').on('click', function () {
@@ -121,13 +121,16 @@ angular.module('CoolaData.UI.Test', ['CoolaData.UI'])
     ];
 
     $scope.size = {width: 400, height: 222};
+    $scope.$on('funnelChartViz_onHighlight', function(e,sectionName, eventName, part, isSection, isHighlighted){
+        console.log(sectionName, eventName, part, isSection, isHighlighted);
+    });
 
     $scope.options = {
         onBreakdown: function (legend) {
             console.log('onBreakdown' + legend);
         },
-        onHighlight: function (e, sectionName, eventName, part, isSection) {
-            console.log(sectionName, eventName, part, isSection);
+        onHighlight: function (e, sectionName, eventName, part, isSection, isHighlighted) {
+            console.log(sectionName, eventName, part, isSection, isHighlighted);
         }
     };
     $scope.loadFunnel = function (index) {
