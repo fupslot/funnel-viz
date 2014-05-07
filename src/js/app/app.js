@@ -16,24 +16,24 @@ settings = {
     sections: [
         {
             name:    'Landing page #1',
-            actual:  [198, 167, 110, 89, 12],
-            compare: [187, 143, 100, 34, 17]
+            actual:  [1598, 1167, 1110, 189, 112],
+            compare: [1187, 1143, 1100, 134, 117]
         },
         {
             name:    'Landing page #2',
-            actual:  [243, 201, 134, 32, 10],
-            compare: [241, 208, 173, 90, 26]
+            actual:  [1452, 1201, 1134, 132, 110],
+            compare: [1241, 1208, 1173, 190, 126]
         },
         {
             name:    'Landing page #3',
-            actual:  [143, 132, 98, 65, 8],
-            compare: [176, 154, 120, 78, 2]
+            actual:  [1143, 1132, 198, 165, 18],
+            compare: [1176, 1154, 1120, 178, 12]
         }
     ]
 };
 
 $(function () {
-    $('#funnel-viz').FunnelViz(q)
+    $('#funnel-viz').FunnelViz(settings)
         .on('breakdown', function (e, legend) {
             console.log(legend);
         })
@@ -46,7 +46,7 @@ $(function () {
     });
 
     $('#init').on('click', function () {
-        $('#funnel-viz').FunnelViz(q);
+        $('#funnel-viz').FunnelViz(settings);
     });
 });
 
